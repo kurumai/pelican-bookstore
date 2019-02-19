@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     
-    working_directory: ~/perican-bookstore
+    working_directory: ~/pelican-bookstore
 
     docker:
       - image: circleci/openjdk@sha256:314c68fdea1aad957dfe32e2d5d813a443128cf9036dc1b9ef8d73e6f472613c
@@ -16,14 +16,14 @@ jobs:
       - checkout
 
       - restore_cache:
-          key: perican-bookstore-{{ checksum "pom.xml" }}
+          key: pelican-bookstore-{{ checksum "pom.xml" }}
       
       - run: mvn dependency:go-offline
       
       - save_cache:
           paths:
             - ~/.m2
-          key: perican-bookstore-{{ checksum "pom.xml" }}
+          key: pelican-bookstore-{{ checksum "pom.xml" }}
       
       - run: mvn package
       
@@ -31,4 +31,4 @@ jobs:
           path: target/surefire-reports
       
       - store_artifacts:
-          path: target/perican-bookstore-0.0.1-SNAPSHOT.jar
+          path: target/pelican-bookstore-0.0.1-SNAPSHOT.jar

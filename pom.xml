@@ -4,12 +4,12 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.circleci</groupId>
-	<artifactId>perican-bookstore</artifactId>
+	<artifactId>pelican-bookstore</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>demo-java-spring</name>
-	<description>Perican Bookstore Demo project for Java on CircleCI 2.0</description>
+	<description>Pelican Bookstore Demo project for Java on CircleCI 2.0</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
