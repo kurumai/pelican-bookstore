@@ -15,7 +15,6 @@ public class DemoJavaSpringApplicationTests {
 
 	@Test
 	public void contextLoads() {
-		Thread.sleep(10 * 1000);
 	}
 
 }
