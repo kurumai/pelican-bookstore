@@ -19,27 +19,32 @@ public class BookListViewTests {
 	public void contextLoads() {
 	}
 
-	@Test void test001() throws Throwable{
+	@Test
+	public void test001() throws Throwable{
 		Thread.sleep(100);
 		assertEquals(true, true);
 	}
 
-	@Test void test002() throws Throwable{
+	@Test
+	public void test002() throws Throwable{
 		Thread.sleep(100);
 		assertEquals(true, true);
 	}
 
-	@Test void test003() throws Throwable{
+	@Test
+	public void test003() throws Throwable{
 		Thread.sleep(100);
 		assertEquals(true, true);
 	}
 
-	@Test void test004() throws Throwable{
+	@Test
+	public void test004() throws Throwable{
 		Thread.sleep(100);
 		assertEquals(true, true);
 	}
 
-	@Test void test005() throws Throwable{
+	@Test
+	public void test005() throws Throwable{
 		Thread.sleep(100);
 		assertEquals(true, false);
 	}
