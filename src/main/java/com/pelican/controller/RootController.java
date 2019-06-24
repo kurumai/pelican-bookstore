@@ -37,7 +37,7 @@ public class RootController {
 		form3.setName("CircleCI Cookbook");
 		form3.setAuthor("Circle Saburou");
 		form3.setPicture("/image/circleci3.png");
-		form3.setPrice(6200);
+		form3.setPrice(6300);
 		books.add(form3);
 
 		mav.addObject("books", books);

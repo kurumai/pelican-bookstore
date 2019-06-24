@@ -7,11 +7,13 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.pelican.PelicanApplication;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@ContextConfiguration
+@ContextConfiguration(classes = PelicanApplication.class)
 @TestPropertySource("/test.properties")
-public class DemoJavaSpringApplicationTests {
+public class PelicanApplicationTests {
 
 	@Test
 	public void contextLoads() {

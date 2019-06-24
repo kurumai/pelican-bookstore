@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.pelican</groupId>
-	<artifactId>pelican-proto</artifactId>
+	<artifactId>pelican-bookstore</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>pelican-proto</name>
+	<name>pelican-bookstore</name>
 	<description>Pelican Bookstore</description>
 
 	<properties>
