@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+  	<meta charset="utf-8">
+  	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<!-- Fonts -->
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+	<!-- Theme CSS -->
+	<link type="text/css" href="/css/argon.css" rel="stylesheet">
+	<!-- JavaScript -->
+	<script src="/js/jquery.min.js"></script>
+	<script src="/js/popper.min.js"></script>
+	<script src="/js/bootstrap.min.js"></script>
+	<script src="/js/argon.js"></script>
+    <title>書籍一覧</title>
+  </head>
+
+  <body>
+  <h1>書籍一覧</h1>
+
+<div class="container">
+  <div class="row">
+    <div th:each="book : ${books}" class="col">
+      <img th:src="${book.picture}" width="60%"></img>
+      <span th:text="${book.name}"></span>,
+      <span th:text="${book.author}"></span>,
+      <span th:text="${book.price}"></span>,
+    </div>
+  </div>
+</div>
+
+  </body>
+</html>
