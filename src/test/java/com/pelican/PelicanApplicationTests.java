@@ -1,4 +1,4 @@
-package com.circleci.demojavaspring;
+package com.pelican;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
