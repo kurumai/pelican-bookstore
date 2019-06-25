@@ -1,4 +1,6 @@
-version: 2
+version: 2.1
+orbs:
+  azure-aks: circleci/azure-aks@0.1.0
 jobs:
   build-and-test:
     working_directory: ~/pelican-bookstore
@@ -41,8 +43,31 @@ jobs:
           TAG=0.1.$CIRCLE_BUILD_NUM
           docker build -t perican-bookstore:$TAG .
 
+  test-cluster:
+    executor: azure-aks/default
+    parameters:
+      cluster-name:
+        description: |
+          Name of the AKS cluster
+        type: string
+      resource-group:
+        description: |
+          Resource group that the cluster is in
+        type: string
+    steps:
+      - azure-aks/update-kubeconfig-with-credentials:
+          cluster-name: << parameters.cluster-name >>
+          install-kubectl: true
+          perform-login: true
+          resource-group: << parameters.resource-group >>
+      - run:
+          command: |
+            kubectl get services
+          name: Test cluster
+
+
 workflows:
-  version: 2
+  version: 2.1
   build_and_build_docker_image:
     jobs:
       - build-and-test
@@ -52,4 +77,24 @@ workflows:
           filters:
             branches:
               only: init
+      - azure-aks/create-cluster:
+          cluster-name: my-aks-demo
+          create-resource-group: true
+          generate-ssh-keys: true
+          location: eastus
+          resource-group: my-aks-demo-rg
+          requires:
+            - build_docker_image
+      - test-cluster:
+          cluster-name: my-aks-demo
+          requires:
+            - azure-aks/create-cluster
+          resource-group: my-aks-demo-rg
+      - azure-aks/delete-cluster:
+          cluster-name: my-aks-demo
+          delete-resource-group: true
+          delete-service-principal: true
+          requires:
+            - test-cluster
+          resource-group: my-aks-demo-rg
 
