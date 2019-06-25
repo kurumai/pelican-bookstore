@@ -31,20 +31,20 @@ jobs:
       - store_artifacts:
           path: target/pelican-bookstore-0.0.1-SNAPSHOT.jar
 
-  build_docker_image:
-    working_directory: ~/pelican-bookstore
-    docker:
-      - image: circleci/openjdk:8-jdk-stretch-browsers
-    steps:
-      - checkout
-      - attach_workspace:
-          at: target
-      - setup_remote_docker:
-          docker_layer_caching: true
-      - run: |
-          TAG=0.1.$CIRCLE_BUILD_NUM
-          docker build -t perican-bookstore:$TAG .
-      - run:
+#  build_docker_image:
+#    working_directory: ~/pelican-bookstore
+#    docker:
+#      - image: circleci/openjdk:8-jdk-stretch-browsers
+#    steps:
+#      - checkout
+#      - attach_workspace:
+#          at: target
+#      - setup_remote_docker:
+#          docker_layer_caching: true
+#      - run: |
+#          TAG=0.1.$CIRCLE_BUILD_NUM
+#          docker build -t perican-bookstore:$TAG .
+#      - run:
 
   create-deployment:
     executor: azure-aks/default
