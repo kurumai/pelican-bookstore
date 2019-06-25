@@ -90,7 +90,7 @@ jobs:
 
 workflows:
   version: 2.1
-  build_and_build_docker_image:
+  build_and_deploys:
     jobs:
       - build-and-test
       - build_docker_image:
