@@ -19,9 +19,9 @@ jobs:
           key: pelican-bookstore-{{ checksum "pom.xml" }}
       - run: mvn package
       - persist_to_workspace:
-          root: .
+          root: target/
           paths:
-            - target/
+            - .
       - store_test_results:
           path: target/surefire-reports      
       - store_artifacts:
