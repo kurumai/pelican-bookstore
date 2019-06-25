@@ -82,6 +82,7 @@ workflows:
           create-resource-group: true
           generate-ssh-keys: true
           location: eastus
+          node-count: 1
           resource-group: my-aks-demo-rg
           requires:
             - build_docker_image
