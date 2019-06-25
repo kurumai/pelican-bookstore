@@ -5,7 +5,7 @@ jobs:
     working_directory: ~/pelican-bookstore
 
     docker:
-      - image: circleci/openjdk@sha256:314c68fdea1aad957dfe32e2d5d813a443128cf9036dc1b9ef8d73e6f472613c
+      - image: circleci/openjdk:8-jdk-browsers
       - image: circleci/postgres:9.6.3-alpine
         environment:
           POSTGRES_USER: root
