@@ -103,11 +103,11 @@ workflows:
 #            branches:
 #              only: init
       - azure-acr/build_and_push_image:
-          workspace-root: target
-          attach-workspace: true
           login-server-name: circlecidemo.azurecr.io
           registry-name: circlecidemo
           repo: circlecidemo.azurecr.io/pelican
+          attach-workspace: true
+          workspace-root: target
           requires:
             - build-and-test
            
