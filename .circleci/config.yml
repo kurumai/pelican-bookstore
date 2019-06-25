@@ -1,5 +1,6 @@
 version: 2.1
 orbs:
+  azure-acr: circleci/azure-acr@0.1.1
   azure-aks: circleci/azure-aks@0.1.0
   kubernetes: circleci/kubernetes@0.3.0
 jobs:
@@ -43,6 +44,7 @@ jobs:
       - run: |
           TAG=0.1.$CIRCLE_BUILD_NUM
           docker build -t perican-bookstore:$TAG .
+      - run:
 
   create-deployment:
     executor: azure-aks/default
@@ -58,10 +60,10 @@ jobs:
     steps:
       - checkout
       - azure-aks/update-kubeconfig-with-credentials:
-          cluster-name: circleciAKSCluster
+          cluster-name: << parameters.cluster-name >>
           install-kubectl: true
           perform-login: true
-          resource-group: CircleCIResources
+          resource-group: << parameters.resource-group >>
       - kubernetes/create-or-update-resource:
           resource-file-path: tests/nginx-deployment/deployment.yaml
           resource-name: deployment/nginx-deployment
@@ -94,12 +96,19 @@ workflows:
   build_and_deploys:
     jobs:
       - build-and-test
-      - build_docker_image:
+#      - build_docker_image:
+#          requires:
+#            - build-and-test
+#          filters:
+#            branches:
+#              only: init
+      - azure-acr/build_and_push_image:
+          login-server-name: circlecidemo.azurecr.io
+          registry-name: circlecidemo
+          repo: circlecidemo.azurecr.io/pelican
           requires:
             - build-and-test
-          filters:
-            branches:
-              only: init
+           
 #      - azure-aks/create-cluster:
 #          cluster-name: my-aks-demo
 #          create-resource-group: true
@@ -129,7 +138,7 @@ workflows:
                 wait: true
           record: true
           requires:
-            - create-deployment
+            - build_docker_image
           resource-group: CircleCIResources
 #          resource-name: deployment/nginx-deployment
 #      - azure-aks/delete-cluster:
