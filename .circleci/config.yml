@@ -77,25 +77,43 @@ workflows:
           filters:
             branches:
               only: init
-      - azure-aks/create-cluster:
-          cluster-name: my-aks-demo
-          create-resource-group: true
-          generate-ssh-keys: true
-          location: eastus
-          node-count: 1
-          resource-group: my-aks-demo-rg
+#      - azure-aks/create-cluster:
+#          cluster-name: my-aks-demo
+#          create-resource-group: true
+#          generate-ssh-keys: true
+#          location: eastus
+#          node-count: 1
+#          resource-group: my-aks-demo-rg
+#          requires:
+#            - build_docker_image
+#      - test-cluster:
+#          cluster-name: my-aks-demo
+#          requires:
+#            - azure-aks/create-cluster
+#          resource-group: my-aks-demo-rg
+      - create-deployment:
+          cluster-name: circleciAKSCluster
           requires:
             - build_docker_image
-      - test-cluster:
-          cluster-name: my-aks-demo
+          resource-group: CircleCIResources
+      - azure-aks/update-container-image:
+          cluster-name: circleciAKSCluster
+          container-image-updates: 'nginx=nginx:1.9.1'
+          post-steps:
+            - kubernetes/delete-resource:
+                resource-names: nginx-deployment
+                resource-types: deployment
+                wait: true
+          record: true
           requires:
-            - azure-aks/create-cluster
-          resource-group: my-aks-demo-rg
-      - azure-aks/delete-cluster:
-          cluster-name: my-aks-demo
-          delete-resource-group: true
-          delete-service-principal: true
-          requires:
-            - test-cluster
-          resource-group: my-aks-demo-rg
+            - create-deployment
+          resource-group: CircleCIResources
+#          resource-name: deployment/nginx-deployment
+#      - azure-aks/delete-cluster:
+#          cluster-name: my-aks-demo
+#          delete-resource-group: true
+#          delete-service-principal: true
+#          requires:
+#            - test-cluster
+#          resource-group: my-aks-demo-rg
 
