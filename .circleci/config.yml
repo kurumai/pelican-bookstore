@@ -1,34 +1,48 @@
 version: 2
 jobs:
-  build:
-    
+  build-and-test:
     working_directory: ~/pelican-bookstore
-
     docker:
       - image: circleci/openjdk:8-jdk-stretch-browsers
       - image: circleci/postgres:9.6.3-alpine
         environment:
           POSTGRES_USER: root
           POSTGRES_DB: circle_test
-
     steps:
-
       - checkout
-
       - restore_cache:
           key: pelican-bookstore-{{ checksum "pom.xml" }}
-      
       - run: mvn dependency:go-offline
-      
       - save_cache:
           paths:
             - ~/.m2
           key: pelican-bookstore-{{ checksum "pom.xml" }}
-      
       - run: mvn package
-      
       - store_test_results:
-          path: target/surefire-reports
-      
+          path: target/surefire-reports      
       - store_artifacts:
           path: target/pelican-bookstore-0.0.1-SNAPSHOT.jar
+
+  build_docker_image:
+    working_directory: ~/pelican-bookstore
+    docker:
+      - image: circleci/openjdk:8-jdk-stretch-browsers
+    steps:
+      - checkout
+      - setup_remote_docker
+          docker_layer_caching: true
+      - run: |
+          TAG=0.1.$CIRCLE_BUILD_NUM
+          docker build -t Perican-Bookstore:$TAG .
+
+workflows:
+  version: 2
+    jobs:
+      - build-and-test
+      - build_docker_image:
+          requires:
+            - build-and-test
+          filters:
+            branches:
+              only: init
+
