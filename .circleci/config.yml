@@ -103,7 +103,7 @@ workflows:
 #            branches:
 #              only: init
       - azure-acr/build_and_push_image:
-          workspace-root: ~/pelican-bookstore
+          workspace-root: target
           attach-workspace: true
           login-server-name: circlecidemo.azurecr.io
           registry-name: circlecidemo
