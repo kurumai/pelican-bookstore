@@ -18,6 +18,10 @@ jobs:
             - ~/.m2
           key: pelican-bookstore-{{ checksum "pom.xml" }}
       - run: mvn package
+      - persist_to_workspace
+          root: .
+          paths:
+            - target/
       - store_test_results:
           path: target/surefire-reports      
       - store_artifacts:
@@ -29,11 +33,13 @@ jobs:
       - image: circleci/openjdk:8-jdk-stretch-browsers
     steps:
       - checkout
+      - attach_workspace:
+          at: target
       - setup_remote_docker:
           docker_layer_caching: true
       - run: |
           TAG=0.1.$CIRCLE_BUILD_NUM
-          docker build -t Perican-Bookstore:$TAG .
+          docker build -t perican-bookstore:$TAG .
 
 workflows:
   version: 2
