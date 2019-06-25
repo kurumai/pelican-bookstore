@@ -1,6 +1,7 @@
 version: 2.1
 orbs:
   azure-aks: circleci/azure-aks@0.1.0
+  kubernetes: circleci/kubernetes@0.3.0
 jobs:
   build-and-test:
     working_directory: ~/pelican-bookstore
