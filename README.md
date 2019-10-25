@@ -1,10 +1,3 @@
 # pelican-bookstore
 
 
-
-
-
-
-
-
-
